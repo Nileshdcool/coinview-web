@@ -12,6 +12,7 @@ import { Table } from 'reactstrap';
 import { Spinner } from 'reactstrap';
 import { Button } from 'reactstrap';
 import Search from "../components/search";
+import GridHeader from "../components/grid-header";
 
 const AssetlsList = () => {
   const [currentAsset, setCurrentAsset] = useState(null);
@@ -79,6 +80,22 @@ const AssetlsList = () => {
     findByName
   }
 
+  const headerData = ['#','Name','Description','Action']
+
+  const renderHeader = () => {
+    return (
+      <thead>
+        <tr>
+          {headerData.map((head)=>{
+            return (
+              <th>{head}</th>
+            )
+          })}
+        </tr>
+      </thead>
+    )
+  }
+
   return (
     <div className="row">
       <Search searchData={searchData}></Search>
@@ -92,21 +109,14 @@ const AssetlsList = () => {
           </div>
         </div>
         {!isLoading ? <Table dark>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+          <GridHeader headerData={headerData}></GridHeader>
           {assets.length > 0 && <tbody>
             {assets.map((crypto, index) => (
               <tr key={index}>
                 <th style={{ textAlign: 'center' }} scope="row">{index + 1}</th>
                 <td>{crypto.name}</td>
                 <td>{crypto.description}</td>
-                <td><Button color="link">View</Button>{' '}</td>
+                <td><Button onClick={() => setActiveAsset(crypto, index)} color="link">View</Button>{' '}</td>
               </tr>
             ))}
           </tbody>}
@@ -118,7 +128,7 @@ const AssetlsList = () => {
           Remove All
         </button>
       </div>
-      <div className="col-md-4">
+      <div className="col-md-4" style={{ marginTop: '55px' }}>
         {currentAsset ? (
           <div>
             <h4>Asset</h4>

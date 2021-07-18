@@ -68,7 +68,6 @@ const AddAsset = () => {
                             name="name"
                         />
                     </div>
-
                     <div className="form-group">
                         <label htmlFor="description">Description</label>
                         <input
