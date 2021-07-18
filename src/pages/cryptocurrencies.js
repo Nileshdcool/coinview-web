@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     retrieveAllAssets,
     findAssetsByTitle,
+    getCryptoInfo
+    
 } from "../actions/assets";
 
 const Cryptocurrencies = (props) => {
@@ -13,7 +15,9 @@ const Cryptocurrencies = (props) => {
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchName, setSearchTitle] = useState("");
 
-    const assets = useSelector(state => state.assets);
+    const assets = useSelector(state => {
+        return state.assets.slice(0, 50);
+    });
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -39,38 +43,40 @@ const Cryptocurrencies = (props) => {
         refreshData();
         dispatch(findAssetsByTitle(searchName));
     };
+    
+    const getLogo = (id) => {
+        // console.log(id);
+        // dispatch(getCryptoInfo(id));
+        return 'https://s2.coinmarketcap.com/static/img/coins/64x64/'+id+'.png';
+    }
 
     return (
-        <Table dark>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>ATH</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-            </tbody>
-        </Table>
+        <>  
+            <Table dark>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Symbol</th>
+                        <th>Max Suppy</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                {assets.length>0 && <tbody>
+                   {assets.map((crypto,index)=>(
+                        <tr key={index}>
+                        <th scope="row">{crypto.cmc_rank}</th>
+                        <td> <img src={getLogo(crypto.id)}/></td>
+                        <td>{crypto.name}</td>
+                        <td>{crypto.symbol}</td>
+                        <td>{crypto.max_supply}</td>
+                        <td>{crypto.quote.USD.price}</td>
+                    </tr>
+                   ))}
+                </tbody>}
+            </Table>
+        </>
     );
 }
 

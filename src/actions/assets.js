@@ -1,9 +1,11 @@
 import {
     CREATE_ASSET,
     RETRIEVE_ASSETS,
+    RETRIEVE_ALL_ASSETS,
     UPDATE_ASSET,
     DELETE_ASSET,
     DELETE_ALL_ASSETS,
+    GET_CRYPTO_INFO
 } from "./types";
 
 import AssetDataService from "../services/AssetService";
@@ -32,7 +34,7 @@ export const retrieveAllAssets = () => async (dispatch) => {
         const res = await AssetDataService.getAllAssets();
 
         dispatch({
-            type: RETRIEVE_ASSETS,
+            type: RETRIEVE_ALL_ASSETS,
             payload: res.data,
         });
     } catch (err) {
@@ -102,6 +104,19 @@ export const findAssetsByTitle = (name) => async (dispatch) => {
 
         dispatch({
             type: RETRIEVE_ASSETS,
+            payload: res.data,
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const getCryptoInfo = (id) => async (dispatch) => {
+    try {
+        const res = await AssetDataService.getCryptoInfo(id);
+
+        dispatch({
+            type: GET_CRYPTO_INFO,
             payload: res.data,
         });
     } catch (err) {

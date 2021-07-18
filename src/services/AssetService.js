@@ -32,6 +32,10 @@ const findByName = name => {
     return http.get(`/assets?name=${name}`);
 };
 
+const getCryptoInfo = id => {
+    return http.get(`/assets/getCryptoInfo?id=${id}`);
+};
+
 const AssetService = {
     getAll,
     get,
@@ -40,7 +44,8 @@ const AssetService = {
     remove,
     removeAll,
     findByName,
-    getAllAssets
+    getAllAssets,
+    getCryptoInfo
 };
 
 export default AssetService;
