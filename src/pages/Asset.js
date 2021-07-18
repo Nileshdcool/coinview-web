@@ -35,30 +35,11 @@ const Asset = (props) => {
         setCurrentAsset({ ...currentAsset, [name]: value });
     };
 
-    const updateStatus = status => {
-        const data = {
-            id: currentAsset.id,
-            name: currentAsset.name,
-            description: currentAsset.description,
-        };
-
-        dispatch(updateAsset(currentAsset.id, data))
-            .then(response => {
-                console.log(response);
-
-                setCurrentAsset({ ...currentAsset, published: status });
-                setMessage("The status was updated successfully!");
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
-
     const updateContent = () => {
         dispatch(updateAsset(currentAsset.id, currentAsset))
             .then(response => {
                 console.log(response);
-
+                props.history.push("/assets");
                 setMessage("The asset was updated successfully!");
             })
             .catch(e => {

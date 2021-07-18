@@ -18,7 +18,7 @@ function numberWithCommas(x) {
 
 const renderSpinner = () => {
     return (
-        <div className="center" style={{marginLeft:'50px'}}>
+        <div className="center" style={{ marginLeft: '50px' }}>
             <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
         </div>
     )
@@ -71,6 +71,8 @@ const Cryptocurrencies = (props) => {
 
     return (
         <>
+            <h2>Today's Cryptocurrency Prices by Market Cap</h2>
+            <h5>The global crypto market cap is $1.31T, a 5.32% increase over the last day.</h5>
             {!isLoading ? <Table dark>
                 <thead>
                     <tr>
@@ -85,8 +87,8 @@ const Cryptocurrencies = (props) => {
                 {assets.length > 0 && <tbody>
                     {assets.map((crypto, index) => (
                         <tr key={index}>
-                            <th style={{textAlign:'center'}} scope="row">{crypto.cmc_rank}</th>
-                            <td> <img src={getLogo(crypto.id)} /></td>
+                            <th style={{ textAlign: 'center' }} scope="row">{crypto.cmc_rank}</th>
+                            <td style={{textAlign:'right'}}>  <img src={getLogo(crypto.id)} /></td>
                             <td>{crypto.name}</td>
                             <td>{crypto.symbol}</td>
                             <td>{numberWithCommas(crypto.max_supply)}</td>

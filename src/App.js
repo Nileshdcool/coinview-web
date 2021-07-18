@@ -15,7 +15,7 @@ function App() {
   return (
     <Router>
       <nav style={{ paddingBottom: '0.1rem', paddingTop: '0.5rem' }} className="navbar navbar-expand navbar-dark bg-dark">
-        <h6><Badge color="secondary">Cryptos:</Badge></h6>
+        <h6 style={{marginLeft:'10px'}}><Badge color="secondary">Cryptos:</Badge></h6>
         <h6><Badge color="secondary">Exchanges:</Badge></h6>
         <h6><Badge color="secondary">Market Cap:</Badge></h6>
         <h6><Badge color="secondary">24h Vol:</Badge></h6>
@@ -25,7 +25,7 @@ function App() {
       <hr style={{ margin: '0.01rem' }}></hr>
 
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a href="/assets" className="navbar-brand">
+        <a style={{marginLeft:'20px'}} href="/assets" className="navbar-brand">
           CoinView.AI
         </a>
         <div className="navbar-nav mr-auto">
@@ -69,22 +69,11 @@ function App() {
               Learn
             </Link>
           </li>
-          <li className="nav-item">
-            <Link to={"/assets"} className="nav-link">
-              Assets
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/add"} className="nav-link">
-              Add
-            </Link>
-          </li>
         </div>
       </nav>
 
       <div className="container mt-3">
-        <h2>Today's Cryptocurrency Prices by Market Cap</h2>
-        <h5>The global crypto market cap is $1.31T, a 5.32% increase over the last day.</h5>
+        
         <Switch>
           <Route exact path={["/", "/cryptocurrencies"]} component={Cryptocurrencies} />
           <Route exact path={["/exchanges"]} component={Exchanges} />

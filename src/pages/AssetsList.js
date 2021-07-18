@@ -83,13 +83,13 @@ const AssetlsList = () => {
             onChange={onChangeSearchName}
           />
           <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
+            <Button
+              color="primary"
               type="button"
               onClick={findByName}
             >
               Search
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -99,7 +99,6 @@ const AssetlsList = () => {
           <h4>Assets List</h4>
           </div>
           <div className="col-md-4" >
-          {/* <Link to="/signup" className="primary">Add</Link> */}
           <Button style={{float:"right"}} onClick={routeChange} color="primary">Add</Button>{' '}
           </div>
         </div>
@@ -152,12 +151,7 @@ const AssetlsList = () => {
               Edit
             </Link>
           </div>
-        ) : (
-          <div style={{marginTop:"20px"}}>
-            <br />
-            <p>Please click on a Asset...</p>
-          </div>
-        )}
+        ) : ''}
       </div>
     </div>
   );
