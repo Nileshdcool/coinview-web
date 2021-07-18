@@ -25,6 +25,21 @@ export const createAsset = (name, description) => async (dispatch) => {
     }
 };
 
+//TODO:- set name as getAllCrypto
+
+export const retrieveAllAssets = () => async (dispatch) => {
+    try {
+        const res = await AssetDataService.getAllAssets();
+
+        dispatch({
+            type: RETRIEVE_ASSETS,
+            payload: res.data,
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 export const retrieveAssets = () => async (dispatch) => {
     try {
         const res = await AssetDataService.getAll();

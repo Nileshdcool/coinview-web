@@ -30,7 +30,6 @@ const AssetlsList = () => {
   };
 
   const setActiveAsset = (asset, index) => {
-    debugger;
     setCurrentAsset(asset);
     setCurrentIndex(index);
   };
