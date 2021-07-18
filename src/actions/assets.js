@@ -81,9 +81,9 @@ export const deleteAllAssets = () => async (dispatch) => {
     }
 };
 
-export const findAssetsByTitle = (name) => async (dispatch) => {
+export const findAssetsByName = (name) => async (dispatch) => {
     try {
-        const res = await AssetDataService.findByTitle(name);
+        const res = await AssetDataService.findByName(name);
 
         dispatch({
             type: RETRIEVE_ASSETS,

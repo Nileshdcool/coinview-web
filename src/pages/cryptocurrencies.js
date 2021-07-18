@@ -62,7 +62,7 @@ const Cryptocurrencies = (props) => {
 
     const findByName = () => {
         refreshData();
-        // dispatch(findAssetsByTitle(searchName));
+        //dispatch(findAssetsBfindyTitle(searchName));
     };
 
     const getLogo = (id) => {

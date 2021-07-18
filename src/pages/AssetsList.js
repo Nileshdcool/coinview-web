@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   retrieveAssets,
-  findAssetsByTitle,
+  findAssetsByName,
   deleteAllAssets,
 } from "../actions/assets";
 import { useHistory } from "react-router-dom";
@@ -60,7 +60,7 @@ const AssetlsList = () => {
 
   const findByName = () => {
     refreshData();
-    dispatch(findAssetsByTitle(searchName));
+    dispatch(findAssetsByName(searchName));
   };
 
   const renderSpinner = () => {
