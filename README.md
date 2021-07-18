@@ -13,7 +13,8 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:8081](http://localhost:8081) to view it in the browser.
 
-Open [http://localhost:8081/cryptocurrencies](http://localhost:8081/cryptocurrencies) to view the first page
+Open [http://localhost:8081/cryptocurrencies](http://localhost:8081/cryptocurrencies) to view the first page.\
+
 Open [http://localhost:8081/assets] (http://localhost:8081/assets) to view the second page
 
 You need to check first two menu items to navigate between these two items
