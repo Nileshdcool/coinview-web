@@ -1,3 +1,4 @@
+import { Button } from "reactstrap";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateAsset, deleteAsset } from "../actions/assets";
@@ -80,7 +81,7 @@ const Asset = (props) => {
             {currentAsset ? (
                 <div className="edit-form">
                     <h4>Asset</h4>
-                    <form>
+                    <form style={{ marginBottom: "10px" }}>
                         <div className="form-group">
                             <label htmlFor="name">Title</label>
                             <input
@@ -105,33 +106,16 @@ const Asset = (props) => {
                         </div>
                     </form>
 
-                    {currentAsset.published ? (
-                        <button
-                            className="badge-primary mr-2"
-                            onClick={() => updateStatus(false)}
-                        >
-                            UnPublish
-                        </button>
-                    ) : (
-                        <button
-                            className="badge-primary mr-2"
-                            onClick={() => updateStatus(true)}
-                        >
-                            Publish
-                        </button>
-                    )}
-
-                    <button className="badge-danger mr-2" onClick={removeAsset}>
+                    <Button style={{ marginRight: "10px" }} color="danger" onClick={removeAsset}>
                         Delete
-                    </button>
-
-                    <button
+                    </Button>
+                    <Button
                         type="submit"
-                        className="badge-success"
+                        color="success"
                         onClick={updateContent}
                     >
                         Update
-                    </button>
+                    </Button>
                     <p>{message}</p>
                 </div>
             ) : (

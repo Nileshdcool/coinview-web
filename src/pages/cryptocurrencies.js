@@ -7,17 +7,40 @@ import {
     retrieveAllAssets,
     findAssetsByTitle,
     getCryptoInfo
-    
+
 } from "../actions/assets";
+import { Spinner } from 'reactstrap';
+
+function numberWithCommas(x) {
+    if (!x) {
+        return '';
+    }
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const renderSpinner = () => {
+    return (
+        <div className="center" style={{marginLeft:'50px'}}>
+            <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
+        </div>
+    )
+}
 
 const Cryptocurrencies = (props) => {
     const [currentAsset, setCurrentAsset] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchName, setSearchTitle] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
-    const assets = useSelector(state => {
-        return state.assets.slice(0, 50);
+    let assets = useSelector(state => {
+        if (state.assets.length > 0) {
+            if (isLoading) {
+                setIsLoading(false);
+            }
+            return state.assets.slice(0, 50);
+        }
     });
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -43,16 +66,14 @@ const Cryptocurrencies = (props) => {
         refreshData();
         dispatch(findAssetsByTitle(searchName));
     };
-    
+
     const getLogo = (id) => {
-        // console.log(id);
-        // dispatch(getCryptoInfo(id));
-        return 'https://s2.coinmarketcap.com/static/img/coins/64x64/'+id+'.png';
+        return 'https://s2.coinmarketcap.com/static/img/coins/64x64/' + id + '.png';
     }
 
     return (
-        <>  
-            <Table dark>
+        <>
+            {!isLoading ? <Table dark>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -63,19 +84,19 @@ const Cryptocurrencies = (props) => {
                         <th>Price</th>
                     </tr>
                 </thead>
-                {assets.length>0 && <tbody>
-                   {assets.map((crypto,index)=>(
+                {assets.length > 0 && <tbody>
+                    {assets.map((crypto, index) => (
                         <tr key={index}>
-                        <th scope="row">{crypto.cmc_rank}</th>
-                        <td> <img src={getLogo(crypto.id)}/></td>
-                        <td>{crypto.name}</td>
-                        <td>{crypto.symbol}</td>
-                        <td>{crypto.max_supply}</td>
-                        <td>{crypto.quote.USD.price}</td>
-                    </tr>
-                   ))}
+                            <th style={{textAlign:'center'}} scope="row">{crypto.cmc_rank}</th>
+                            <td> <img src={getLogo(crypto.id)} /></td>
+                            <td>{crypto.name}</td>
+                            <td>{crypto.symbol}</td>
+                            <td>{numberWithCommas(crypto.max_supply)}</td>
+                            <td>${crypto.quote ? crypto.quote.USD.price.toFixed(2) : ''}</td>
+                        </tr>
+                    ))}
                 </tbody>}
-            </Table>
+            </Table> : renderSpinner()}
         </>
     );
 }

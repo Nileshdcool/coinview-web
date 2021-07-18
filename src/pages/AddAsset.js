@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createAsset } from "../actions/assets";
+import { useHistory } from "react-router-dom";
 
 const AddAsset = () => {
     const initialAssetState = {
@@ -10,6 +11,8 @@ const AddAsset = () => {
     };
     const [asset, setAsset] = useState(initialAssetState);
     const [submitted, setSubmitted] = useState(false);
+
+    const history = useHistory();
 
     const dispatch = useDispatch();
 
@@ -29,7 +32,8 @@ const AddAsset = () => {
                     description: data.description
                 });
                 setSubmitted(true);
-
+                let path = `assets`; 
+                history.push(path);
                 console.log(data);
             })
             .catch(e => {

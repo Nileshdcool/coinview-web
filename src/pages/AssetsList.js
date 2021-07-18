@@ -6,14 +6,27 @@ import {
   findAssetsByTitle,
   deleteAllAssets,
 } from "../actions/assets";
+import { useHistory } from "react-router-dom";
+import { Table } from 'reactstrap';
+
+import { Spinner } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 const AssetlsList = () => {
   const [currentAsset, setCurrentAsset] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [searchName, setSearchTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const history = useHistory();
 
   const assets = useSelector(state => state.assets);
   const dispatch = useDispatch();
+
+  const routeChange = () =>{ 
+    let path = `add`; 
+    history.push(path);
+  }
 
   useEffect(() => {
     dispatch(retrieveAssets());
@@ -50,9 +63,17 @@ const AssetlsList = () => {
     dispatch(findAssetsByTitle(searchName));
   };
 
+  const renderSpinner = () => {
+    return (
+      <div className="center" style={{ marginLeft: '50px' }}>
+        <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
+      </div>
+    )
+  }
+
   return (
-    <div className="list row">
-      <div className="col-md-8">
+    <div className="row">
+      <div className="col-md-12">
         <div className="input-group mb-3">
           <input
             type="text"
@@ -72,24 +93,36 @@ const AssetlsList = () => {
           </div>
         </div>
       </div>
-      <div className="col-md-6">
-        <h4>Assets List</h4>
-
-        <ul className="list-group">
-          {assets &&
-            assets.map((asset, index) => (
-              <li
-                className={
-                  "list-group-item " + (index === currentIndex ? "active" : "")
-                }
-                onClick={() => setActiveAsset(asset, index)}
-                key={index}
-              >
-                {asset.name}
-              </li>
+      <div className="col-md-8">
+        <div className="row" style={{marginBottom:"20px"}}>
+          <div className="col-md-8">
+          <h4>Assets List</h4>
+          </div>
+          <div className="col-md-4" >
+          {/* <Link to="/signup" className="primary">Add</Link> */}
+          <Button style={{float:"right"}} onClick={routeChange} color="primary">Add</Button>{' '}
+          </div>
+        </div>
+        {!isLoading ? <Table dark>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          {assets.length > 0 && <tbody>
+            {assets.map((crypto, index) => (
+              <tr key={index} onClick={() => setActiveAsset(crypto, index)} >
+                <th style={{ textAlign: 'center' }} scope="row">{index + 1}</th>
+                <td>{crypto.name}</td>
+                <td>{crypto.description}</td>
+                <td><Button color="link">View</Button>{' '}</td>
+              </tr>
             ))}
-        </ul>
-
+          </tbody>}
+        </Table> : renderSpinner()}
         <button
           className="m-3 btn btn-sm btn-danger"
           onClick={removeAllAssets}
@@ -97,7 +130,7 @@ const AssetlsList = () => {
           Remove All
         </button>
       </div>
-      <div className="col-md-6">
+      <div className="col-md-4">
         {currentAsset ? (
           <div>
             <h4>Asset</h4>
@@ -115,13 +148,12 @@ const AssetlsList = () => {
             </div>
             <Link
               to={"/assets/" + currentAsset.id}
-
             >
               Edit
             </Link>
           </div>
         ) : (
-          <div>
+          <div style={{marginTop:"20px"}}>
             <br />
             <p>Please click on a Asset...</p>
           </div>
