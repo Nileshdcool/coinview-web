@@ -8,8 +8,6 @@ import {
 
 import AssetDataService from "../services/AssetService";
 
-// TODO:- Need to add for getAlAssets call as well
-
 export const createAsset = (name, description) => async (dispatch) => {
     try {
         const res = await AssetDataService.create({ name, description });

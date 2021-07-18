@@ -5,12 +5,9 @@ import {
 
 import AssetDataService from "../services/AssetService";
 
-//TODO:- set name as getAllCrypto
-
 export const retrieveAllAssets = () => async (dispatch) => {
     try {
         const res = await AssetDataService.getAllAssets();
-
         dispatch({
             type: RETRIEVE_ALL_ASSETS,
             payload: res.data,
