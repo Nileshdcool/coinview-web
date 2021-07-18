@@ -11,6 +11,7 @@ import { Table } from 'reactstrap';
 
 import { Spinner } from 'reactstrap';
 import { Button } from 'reactstrap';
+import Search from "../components/search";
 
 const AssetlsList = () => {
   const [currentAsset, setCurrentAsset] = useState(null);
@@ -21,10 +22,11 @@ const AssetlsList = () => {
   const history = useHistory();
 
   const assets = useSelector(state => state.assets);
+
   const dispatch = useDispatch();
 
-  const routeChange = () =>{ 
-    let path = `add`; 
+  const routeChange = () => {
+    let path = `add`;
     history.push(path);
   }
 
@@ -71,35 +73,22 @@ const AssetlsList = () => {
     )
   }
 
+  const searchData = {
+    searchName,
+    onChangeSearchName,
+    findByName
+  }
+
   return (
     <div className="row">
-      <div className="col-md-12">
-        <div className="input-group mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search by name"
-            value={searchName}
-            onChange={onChangeSearchName}
-          />
-          <div className="input-group-append">
-            <Button
-              color="primary"
-              type="button"
-              onClick={findByName}
-            >
-              Search
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Search searchData={searchData}></Search>
       <div className="col-md-8">
-        <div className="row" style={{marginBottom:"20px"}}>
+        <div className="row" style={{ marginBottom: "20px" }}>
           <div className="col-md-8">
-          <h4>Assets List</h4>
+            <h4>Assets List</h4>
           </div>
           <div className="col-md-4" >
-          <Button style={{float:"right"}} onClick={routeChange} color="primary">Add</Button>{' '}
+            <Button style={{ float: "right" }} onClick={routeChange} color="primary">Add</Button>{' '}
           </div>
         </div>
         {!isLoading ? <Table dark>
@@ -113,7 +102,7 @@ const AssetlsList = () => {
           </thead>
           {assets.length > 0 && <tbody>
             {assets.map((crypto, index) => (
-              <tr key={index} onClick={() => setActiveAsset(crypto, index)} >
+              <tr key={index}>
                 <th style={{ textAlign: 'center' }} scope="row">{index + 1}</th>
                 <td>{crypto.name}</td>
                 <td>{crypto.description}</td>
