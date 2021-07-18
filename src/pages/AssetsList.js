@@ -9,10 +9,11 @@ import {
 import { useHistory } from "react-router-dom";
 import { Table } from 'reactstrap';
 
-import { Spinner } from 'reactstrap';
+import { AppSpinner } from '../components/spinner';
 import { Button } from 'reactstrap';
 import Search from "../components/search";
 import GridHeader from "../components/grid-header";
+import { ASSET, ASSET_LIST, DESC, EDIT, REMOVE_ALL, NAME } from "../helper/constants";
 
 const AssetlsList = () => {
   const [currentAsset, setCurrentAsset] = useState(null);
@@ -66,43 +67,20 @@ const AssetlsList = () => {
     dispatch(findAssetsByName(searchName));
   };
 
-  const renderSpinner = () => {
-    return (
-      <div className="center" style={{ marginLeft: '50px' }}>
-        <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
-      </div>
-    )
-  }
-
   const searchData = {
     searchName,
     onChangeSearchName,
     findByName
   }
 
-  const headerData = ['#','Name','Description','Action']
-
-  const renderHeader = () => {
-    return (
-      <thead>
-        <tr>
-          {headerData.map((head)=>{
-            return (
-              <th>{head}</th>
-            )
-          })}
-        </tr>
-      </thead>
-    )
-  }
-
+  const headerData = ['#', 'Name', 'Description', 'Action'];
   return (
     <div className="row">
       <Search searchData={searchData}></Search>
       <div className="col-md-8">
         <div className="row" style={{ marginBottom: "20px" }}>
           <div className="col-md-8">
-            <h4>Assets List</h4>
+            <h4>{ASSET_LIST}</h4>
           </div>
           <div className="col-md-4" >
             <Button style={{ float: "right" }} onClick={routeChange} color="primary">Add</Button>{' '}
@@ -120,34 +98,34 @@ const AssetlsList = () => {
               </tr>
             ))}
           </tbody>}
-        </Table> : renderSpinner()}
+        </Table> : <AppSpinner></AppSpinner>}
         <button
           className="m-3 btn btn-sm btn-danger"
           onClick={removeAllAssets}
         >
-          Remove All
+          {REMOVE_ALL}
         </button>
       </div>
       <div className="col-md-4" style={{ marginTop: '55px' }}>
         {currentAsset ? (
           <div>
-            <h4>Asset</h4>
+            <h4>{ASSET}</h4>
             <div>
               <label>
-                <strong>Name:</strong>
+                <strong>{NAME}:</strong>
               </label>{" "}
               {currentAsset.name}
             </div>
             <div>
               <label>
-                <strong>Description:</strong>
+                <strong>{DESC}:</strong>
               </label>{" "}
               {currentAsset.description}
             </div>
             <Link
               to={"/assets/" + currentAsset.id}
             >
-              Edit
+              {EDIT}
             </Link>
           </div>
         ) : ''}

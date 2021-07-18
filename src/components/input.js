@@ -1,15 +1,16 @@
 import React from 'react';
 
 const Input = (props) => {
+    const {htmlFor,label,id,value,handleInputChange,name} = props.attributes;
     return (
         <div className="form-group">
-            <label htmlFor="name">Title</label>
+            <label htmlFor={htmlFor}>{label}</label>
             <input
                 type="text"
                 className="form-control"
-                id="name"
-                name="name"
-                value={currentAsset.name}
+                id={id}
+                name={name}
+                value={value}
                 onChange={handleInputChange}
             />
         </div>

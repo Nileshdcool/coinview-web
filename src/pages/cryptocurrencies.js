@@ -7,7 +7,10 @@ import {
     retrieveAllAssets,
 
 } from "../actions/crypto";
-import { Spinner } from 'reactstrap';
+import { AppSpinner } from '../components/spinner';
+import GridHeader from "../components/grid-header";
+import { SubHeader } from '../components/sub-header';
+import Search from '../components/search';
 
 function numberWithCommas(x) {
     if (!x) {
@@ -16,26 +19,26 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const renderSpinner = () => {
-    return (
-        <div className="center" style={{ marginLeft: '50px' }}>
-            <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
-        </div>
-    )
-}
-
 const Cryptocurrencies = (props) => {
     const [currentAsset, setCurrentAsset] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchName, setSearchTitle] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const [pageSize, setPageSize] = useState(50);
 
     let assets = useSelector(state => {
         if (state.crypto.length > 0) {
             if (isLoading) {
                 setIsLoading(false);
             }
-            return state.crypto.slice(0, 50);
+            if (searchName !== '') {
+                return state.crypto.filter((c) => {
+                    if (c.name.toLowerCase().includes(searchName.toLowerCase())) {
+                        return c;
+                    }
+                }).slice(0, pageSize);
+            }
+            return state.crypto.slice(0, pageSize);
         }
     });
 
@@ -60,43 +63,47 @@ const Cryptocurrencies = (props) => {
         setCurrentIndex(index);
     };
 
+
+
     const findByName = () => {
+        setIsLoading(true);
         refreshData();
-        //dispatch(findAssetsBfindyTitle(searchName));
+        dispatch(retrieveAllAssets());
     };
 
     const getLogo = (id) => {
         return 'https://s2.coinmarketcap.com/static/img/coins/64x64/' + id + '.png';
     }
 
+    const searchData = {
+        searchName,
+        onChangeSearchName,
+        findByName
+    }
+
+    const headerData = ['#', '', 'Name', 'Symbol', 'Max Supply', 'Price'];
+
     return (
         <>
-            <h2>Today's Cryptocurrency Prices by Market Cap</h2>
-            <h5>The global crypto market cap is $1.31T, a 5.32% increase over the last day.</h5>
-            {!isLoading ? <Table dark>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Symbol</th>
-                        <th>Max Suppy</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                {assets.length > 0 && <tbody>
-                    {assets.map((crypto, index) => (
-                        <tr key={index}>
-                            <th style={{ textAlign: 'center' }} scope="row">{crypto.cmc_rank}</th>
-                            <td style={{textAlign:'right'}}>  <img src={getLogo(crypto.id)} /></td>
-                            <td>{crypto.name}</td>
-                            <td>{crypto.symbol}</td>
-                            <td>{numberWithCommas(crypto.max_supply)}</td>
-                            <td>${crypto.quote ? crypto.quote.USD.price.toFixed(2) : ''}</td>
-                        </tr>
-                    ))}
-                </tbody>}
-            </Table> : renderSpinner()}
+            <SubHeader></SubHeader>
+            {!isLoading ? <>
+                <Search searchData={searchData}></Search>
+                <Table dark>
+                    <GridHeader headerData={headerData}></GridHeader>
+                    {assets.length > 0 && <tbody>
+                        {assets.map((crypto, index) => (
+                            <tr key={index}>
+                                <th style={{ textAlign: 'center' }} scope="row">{crypto.cmc_rank}</th>
+                                <td style={{ textAlign: 'right' }}>  <img src={getLogo(crypto.id)} /></td>
+                                <td>{crypto.name}</td>
+                                <td>{crypto.symbol}</td>
+                                <td>{numberWithCommas(crypto.max_supply)}</td>
+                                <td>${crypto.quote ? crypto.quote.USD.price.toFixed(2) : ''}</td>
+                            </tr>
+                        ))}
+                    </tbody>}
+                </Table>
+            </> : <AppSpinner></AppSpinner>}
         </>
     );
 }

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'reactstrap';
+import { SEARCH } from '../helper/constants';
 
 const Search = (props) => {
     return (
         <>
-            <div className="col-md-8">
+            <div className="col-md-12">
                 <div className="input-group mb-3">
                     <input
                         type="text"
@@ -19,7 +20,7 @@ const Search = (props) => {
                             type="button"
                             onClick={props.searchData.findByName}
                         >
-                            Search
+                           {SEARCH}
                         </Button>
                     </div>
                 </div>

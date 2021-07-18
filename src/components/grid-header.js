@@ -5,9 +5,9 @@ const GridHeader = (props) => {
         return (
             <thead>
               <tr>
-                {headerData.map((head)=>{
+                {headerData.map((head,index)=>{
                   return (
-                    <th>{head}</th>
+                    <th key={index}>{head}</th>
                   )
                 })}
               </tr>

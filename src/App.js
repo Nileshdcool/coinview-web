@@ -15,17 +15,17 @@ function App() {
   return (
     <Router>
       <nav style={{ paddingBottom: '0.1rem', paddingTop: '0.5rem' }} className="navbar navbar-expand navbar-dark bg-dark">
-        <h6 style={{marginLeft:'10px'}}><Badge color="secondary">Cryptos:</Badge></h6>
-        <h6><Badge color="secondary">Exchanges:</Badge></h6>
-        <h6><Badge color="secondary">Market Cap:</Badge></h6>
-        <h6><Badge color="secondary">24h Vol:</Badge></h6>
-        <h6><Badge color="secondary">Dominance:</Badge></h6>
-        <h6><Badge color="secondary">Eth Gas:</Badge></h6>
+        <h6 style={{ marginLeft: '10px' }}><Badge color="secondary">Cryptos:<span style={{ color: "rgb(97, 136, 255)" }}>10,945</span></Badge></h6>
+        <h6><Badge color="secondary">Exchanges:<span style={{ color: "rgb(97, 136, 255)" }}>385</span></Badge></h6>
+        <h6><Badge color="secondary">Market Cap: <span style={{ color: "rgb(97, 136, 255)" }}>$1,294,743,573,277</span></Badge></h6>
+        <h6><Badge color="secondary">24h Vol: <span style={{ color: "rgb(97, 136, 255)" }}>$52,529,691,582</span></Badge></h6>
+        <h6><Badge color="secondary">Dominance: <span style={{ color: "rgb(97, 136, 255)" }}>BTC: 45.9% ETH: 17.2%</span></Badge></h6>
+        <h6><Badge color="secondary">Eth Gas:<span style={{ color: "rgb(97, 136, 255)" }}>19 Gwei</span></Badge></h6>
       </nav>
       <hr style={{ margin: '0.01rem' }}></hr>
 
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a style={{marginLeft:'20px'}} href="/assets" className="navbar-brand">
+        <a style={{ marginLeft: '20px' }} href="/assets" className="navbar-brand">
           CoinView.AI
         </a>
         <div className="navbar-nav mr-auto">
@@ -73,7 +73,7 @@ function App() {
       </nav>
 
       <div className="container mt-3">
-        
+
         <Switch>
           <Route exact path={["/", "/cryptocurrencies"]} component={Cryptocurrencies} />
           <Route exact path={["/exchanges"]} component={Exchanges} />

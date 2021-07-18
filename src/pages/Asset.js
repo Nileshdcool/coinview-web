@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateAsset, deleteAsset } from "../actions/assets";
 import AssetDataService from "../services/AssetService";
+import Input from '../components/input';
+import { ASSET, DELETE, UPDATE } from "../helper/constants";
 
 const Asset = (props) => {
     const initialAssetState = {
@@ -57,54 +59,44 @@ const Asset = (props) => {
             });
     };
 
+    const nameInput = {
+        htmlFor: 'name',
+        label: 'Name',
+        id: 'name',
+        value: currentAsset.name,
+        handleInputChange,
+        name: 'name'
+    }
+    const descInput = {
+        htmlFor: 'description',
+        label: 'Description',
+        id: 'description',
+        value: currentAsset.description,
+        handleInputChange,
+        name: 'description'
+    }
+
     return (
         <div>
-            {currentAsset ? (
-                <div className="edit-form">
-                    <h4>Asset</h4>
-                    <form style={{ marginBottom: "10px" }}>
-                        <div className="form-group">
-                            <label htmlFor="name">Title</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="name"
-                                name="name"
-                                value={currentAsset.name}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="description">Description</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="description"
-                                name="description"
-                                value={currentAsset.description}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                    </form>
+            <div className="edit-form">
+                <h4>{ASSET}</h4>
+                <form style={{ marginBottom: "10px" }}>
+                <Input attributes={nameInput}></Input>
+                <Input attributes={descInput}></Input>
+                </form>
+                <Button style={{ marginRight: "10px" }} color="danger" onClick={removeAsset}>
+                    {DELETE}
+                </Button>
+                <Button
+                    type="submit"
+                    color="success"
+                    onClick={updateContent}
+                >
+                    {UPDATE}
+                </Button>
+                <p>{message}</p>
+            </div>
 
-                    <Button style={{ marginRight: "10px" }} color="danger" onClick={removeAsset}>
-                        Delete
-                    </Button>
-                    <Button
-                        type="submit"
-                        color="success"
-                        onClick={updateContent}
-                    >
-                        Update
-                    </Button>
-                    <p>{message}</p>
-                </div>
-            ) : (
-                <div>
-                    <br />
-                    <p>Please click on a Asset...</p>
-                </div>
-            )}
         </div>
     );
 };

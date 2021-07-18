@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createAsset } from "../actions/assets";
 import { useHistory } from "react-router-dom";
+import { ADD, SUBMIT, YOU_SUBMITTED_SUCCESSFULLY } from '../helper/constants';
+import Input from '../components/input';
 
 const AddAsset = () => {
     const initialAssetState = {
@@ -23,7 +25,6 @@ const AddAsset = () => {
 
     const saveAsset = () => {
         const { name, description } = asset;
-
         dispatch(createAsset(name, description))
             .then(data => {
                 setAsset({
@@ -32,7 +33,7 @@ const AddAsset = () => {
                     description: data.description
                 });
                 setSubmitted(true);
-                let path = `assets`; 
+                let path = `assets`;
                 history.push(path);
                 console.log(data);
             })
@@ -45,46 +46,43 @@ const AddAsset = () => {
         setAsset(initialAssetState);
         setSubmitted(false);
     };
+    const nameInput = {
+        htmlFor: 'name',
+        label: 'Name',
+        id: 'name',
+        value: asset.name,
+        handleInputChange,
+        name: 'name'
+    }
+    const descInput = {
+        htmlFor: 'description',
+        label: 'Description',
+        id: 'description',
+        value: asset.description,
+        handleInputChange,
+        name: 'description'
+    }
     return (
         <div className="submit-form">
             {submitted ? (
                 <div>
-                    <h4>You submitted successfully!</h4>
+                    <h4>{YOU_SUBMITTED_SUCCESSFULLY}</h4>
                     <button className="btn btn-success" onClick={newAsset}>
-                        Add
+                        {ADD}
                     </button>
                 </div>
             ) : (
-                <div>
-                    <div className="form-group">
-                        <label htmlFor="title">Name</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="name"
-                            required
-                            value={asset.name}
-                            onChange={handleInputChange}
-                            name="name"
-                        />
+                <>
+                    <div style={{marginBottom:'20px'}}>
+                        <Input attributes={nameInput}></Input>
+                        <Input attributes={descInput}></Input>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="description">Description</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="description"
-                            required
-                            value={asset.description}
-                            onChange={handleInputChange}
-                            name="description"
-                        />
+                    <div>
+                        <button onClick={saveAsset} className="btn btn-success">
+                            {SUBMIT}
+                        </button>
                     </div>
-
-                    <button onClick={saveAsset} className="btn btn-success">
-                        Submit
-                    </button>
-                </div>
+                </>
             )}
         </div>
     );
