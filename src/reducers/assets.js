@@ -1,12 +1,9 @@
 import {
     CREATE_ASSET,
     RETRIEVE_ASSETS,
-    RETRIEVE_ALL_ASSETS,
     UPDATE_ASSET,
     DELETE_ASSET,
-    DELETE_ALL_ASSETS,
-    GET_CRYPTO_INFO
-} from "../actions/types";
+    DELETE_ALL_ASSETS} from "../actions/types";
 
 const initialState = [];
 
@@ -18,7 +15,6 @@ function assetReducer(assets = initialState, action) {
             return [...assets, payload];
 
         case RETRIEVE_ASSETS:
-        case RETRIEVE_ALL_ASSETS:
             return payload;
 
         case UPDATE_ASSET:

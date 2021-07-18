@@ -5,10 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
     retrieveAllAssets,
-    findAssetsByTitle,
-    getCryptoInfo
 
-} from "../actions/assets";
+} from "../actions/crypto";
 import { Spinner } from 'reactstrap';
 
 function numberWithCommas(x) {
@@ -33,11 +31,11 @@ const Cryptocurrencies = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     let assets = useSelector(state => {
-        if (state.assets.length > 0) {
+        if (state.crypto.length > 0) {
             if (isLoading) {
                 setIsLoading(false);
             }
-            return state.assets.slice(0, 50);
+            return state.crypto.slice(0, 50);
         }
     });
 
@@ -64,7 +62,7 @@ const Cryptocurrencies = (props) => {
 
     const findByName = () => {
         refreshData();
-        dispatch(findAssetsByTitle(searchName));
+        // dispatch(findAssetsByTitle(searchName));
     };
 
     const getLogo = (id) => {
